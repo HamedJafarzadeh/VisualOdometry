@@ -19,24 +19,24 @@ def drawLinesforKeypoints(imgkeypoints1,imgkeypoints2,imgpad):
 
 datasetPath = "/home/hamed/thesisproject/kittidataset/00/image_0/"
 # img_c = cv2.imread('simple_samples/far.jpg')
-img_c = cv2.imread(datasetPath + '000000.png')
+img1_c = cv2.imread(datasetPath + '000000.png')
 #img_c = cv2.resize(img_c,None,fx=0.5,fy=0.5)
-img = cv2.cvtColor(img_c,cv2.COLOR_BGR2GRAY)
+img1 = cv2.cvtColor(img1_c,cv2.COLOR_BGR2GRAY)
 
 # img2_c = cv2.imread('simple_samples/near.jpg')
 img2_c = cv2.imread(datasetPath + '000001.png')
 #img2_c = cv2.resize(img2_c,None,fx=0.5,fy=0.5)
 img2 = cv2.cvtColor(img2_c,cv2.COLOR_BGR2GRAY)
 
-img1_testpad = img_c.copy() # Just for initialize img_testpad
+img1_testpad = img1_c.copy() # Just for initialize img_testpad
 img2_testpad = img2_c.copy() # Just for initialize img2_testpad
 
 
 # Initiate FAST object with default values
 fast = cv2.FastFeatureDetector_create()
-kp = fast.detect(img,None)
-FastFeatures = img
-FastFeatures = cv2.drawKeypoints(img, kp, FastFeatures)
+kp = fast.detect(img1,None)
+FastFeatures = img1
+FastFeatures = cv2.drawKeypoints(img1, kp, FastFeatures)
 
 # Initiate FAST object with default values
 # kp2 = fast.detect(img,None)
@@ -56,43 +56,12 @@ feature_params = dict( maxCorners = 100,
 lk_params = dict( winSize  = (50,50),
                   maxLevel = 2,
                   criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, 0.01))		
-img1_features = cv2.goodFeaturesToTrack(img, mask = None, **feature_params)
-img2_features,st,err = cv2.calcOpticalFlowPyrLK(img,img2,img1_features,None,**lk_params); 
-
-
-# FastFeatures = cv2.drawKeypoints(img, kp, FastFeatures,color=(255,0,0))
-# FastFeatures2 = cv2.drawKeypoints(img2, kp2, FastFeatures,color=(255,0,0))
-img1_features_filtered = img1_features[err<50]
-img2_features_filtered = img2_features[err<50]
-img1_keypoints = np.float32(img1_features_filtered)
-img2_keypoints = np.float32(img2_features_filtered)
-
-
-drawKeypoints(img1_testpad,img1_keypoints)
-drawKeypoints(img2_testpad,img2_keypoints)
-drawLinesforKeypoints(img1_keypoints,img2_keypoints,img2_testpad)
-# Test Draw for one line
-# x1 = kp2_c[20][0]
-# y1 = kp2_c[20][1]
-# x2 = kp1_c[20][0]
-# y2 = kp1_c[20][1]
-# cv2.circle(FastFeatures2, (x1,y1), 5,(255,0,0),thickness=6)
-# cv2.line(FastFeatures2, (x1,y1),(x2,y2), (255,0,0),thickness=5)
-
 
 
     
     
 
-plt.suptitle("Good Feature to Track", fontsize=16)
-plt.subplot(2,2,1)
-plt.imshow(cv2.cvtColor(img_c,cv2.COLOR_BGR2RGB),cmap='gray')
-plt.subplot(2,2,2)
-plt.imshow(img1_testpad,cmap='gray')
-plt.subplot(2,2,3)
-plt.imshow(cv2.cvtColor(img2_c,cv2.COLOR_BGR2RGB),cmap='gray')
-plt.subplot(2,2,4)
-plt.imshow(img2_testpad,cmap='gray')
+
 
 # plt.subplot(3,3,1)
 # plt.imshow(cv2.cvtColor(img_c,cv2.COLOR_BGR2RGB),cmap='gray')
@@ -110,14 +79,61 @@ plt.imshow(img2_testpad,cmap='gray')
 
 filenames = [img for img in glob.glob(datasetPath + "*.png")]
 filenames.sort()
+
+#get_image
+#try to predict new features
+#filter good features
+#draw lines
+img1_features = cv2.goodFeaturesToTrack(img1, mask = None, **feature_params)
+
 for img in filenames:
-    tempimg = cv2.imread(img,0)
+    img2_c = cv2.imread(img)
+    img1 = cv2.cvtColor(img1_c,cv2.COLOR_BGR2GRAY)
+    img2 = cv2.cvtColor(img2_c,cv2.COLOR_BGR2GRAY)
+    img1_testpad = img1_c.copy() # Just for initialize img_testpad
+    img2_testpad = img2_c.copy() # Just for initialize img2_testpad
+    img2_features,st,err = cv2.calcOpticalFlowPyrLK(img1,img2,img1_features,None,**lk_params); 
+    img1_features_filtered = img1_features[err<50]
+    img2_features_filtered = img2_features[err<50]
+    img1_keypoints = np.float32(img1_features_filtered)
+    img2_keypoints = np.float32(img2_features_filtered)
+    drawKeypoints(img1_testpad,img1_keypoints)
+    drawKeypoints(img2_testpad,img2_keypoints)
+    drawLinesforKeypoints(img1_keypoints,img2_keypoints,img2_testpad)
     # cv2.imshow('new',tempimg)
+    plt.suptitle("Good Feature to Track", fontsize=16)
+    plt.subplot(2,2,1)
+    plt.imshow(cv2.cvtColor(img1_c,cv2.COLOR_BGR2RGB),cmap='gray')
+    plt.subplot(2,2,2)
+    plt.imshow(img1_testpad,cmap='gray')
     plt.subplot(2,2,3)
-    plt.imshow(tempimg,cmap='gray')
+    plt.imshow(cv2.cvtColor(img2_c,cv2.COLOR_BGR2RGB),cmap='gray')
+    plt.subplot(2,2,4)
+    plt.imshow(img2_testpad,cmap='gray')
+    img1_c = img2_c.copy()
+    img1_features = img2_features.copy()
     plt.waitforbuttonpress() 
 
 
+
+
+
+
+
+# FastFeatures = cv2.drawKeypoints(img, kp, FastFeatures,color=(255,0,0))
+# FastFeatures2 = cv2.drawKeypoints(img2, kp2, FastFeatures,color=(255,0,0))
+
+
+
+
+
+# Test Draw for one line
+# x1 = kp2_c[20][0]
+# y1 = kp2_c[20][1]
+# x2 = kp1_c[20][0]
+# y2 = kp1_c[20][1]
+# cv2.circle(FastFeatures2, (x1,y1), 5,(255,0,0),thickness=6)
+# cv2.line(FastFeatures2, (x1,y1),(x2,y2), (255,0,0),thickness=5)
 
 
 
