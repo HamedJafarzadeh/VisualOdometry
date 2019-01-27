@@ -34,7 +34,7 @@ feature_params = dict( maxCorners = 100,
                        qualityLevel = 0.3,
                        minDistance = 7,
                        blockSize = 7 )
-lk_params = dict( winSize  = (15,15),
+lk_params = dict( winSize  = (50,50),
                   maxLevel = 2,
                   criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, 0.01))		
 kp = cv2.goodFeaturesToTrack(img, mask = None, **feature_params)
@@ -44,12 +44,17 @@ FastFeatures = img_c.copy()
 FastFeatures2 = img2_c.copy()
 # FastFeatures = cv2.drawKeypoints(img, kp, FastFeatures,color=(255,0,0))
 # FastFeatures2 = cv2.drawKeypoints(img2, kp2, FastFeatures,color=(255,0,0))
-kp2_c = kp2[st==1]
-corners1 = np.float32(kp)
+kp2_c = kp2[err<50]
+kp1_c = kp[err<50]
+corners1 = np.float32(kp1_c)
 corners2 = np.float32(kp2_c)
 
+
+
 for item in corners1:
-    x, y = item[0]
+    # x,y = item[0]
+    x = item[0]
+    y = item[1]
     color = list(np.random.choice(range(256), size=3))
     cv2.circle(FastFeatures, (x,y), 5,color,thickness=2)
 
@@ -60,6 +65,25 @@ for item in corners2:
     color = list(np.random.choice(range(256), size=3))
     cv2.circle(FastFeatures2, (x,y), 5,color,thickness=2)
 
+
+# Test Draw for one line
+# x1 = kp2_c[20][0]
+# y1 = kp2_c[20][1]
+# x2 = kp1_c[20][0]
+# y2 = kp1_c[20][1]
+# cv2.circle(FastFeatures2, (x1,y1), 5,(255,0,0),thickness=6)
+# cv2.line(FastFeatures2, (x1,y1),(x2,y2), (255,0,0),thickness=5)
+
+
+for i in range(len(kp2_c)) :
+    print(kp2_c[i])
+    x1 = kp2_c[i][0]
+    y1 = kp2_c[i][1]
+    x2 = kp1_c[i][0]
+    y2 = kp1_c[i][1]
+    cv2.line(FastFeatures2, (x1,y1),(x2,y2), (255,0,0), 2)
+    
+    
 
 plt.suptitle("Good Feature to Track", fontsize=16)
 
