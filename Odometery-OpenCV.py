@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 import glob
+import time
 def drawKeypoints(imgpad,imgkeypoints):
     for item in imgkeypoints:
         # x,y = item[0]
@@ -85,22 +86,33 @@ filenames.sort()
 #filter good features
 #draw lines
 img1_features = cv2.goodFeaturesToTrack(img1, mask = None, **feature_params)
-
 for img in filenames:
+    # ------------- Load data ---------------- >
     img2_c = cv2.imread(img)
     img1 = cv2.cvtColor(img1_c,cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2_c,cv2.COLOR_BGR2GRAY)
     img1_testpad = img1_c.copy() # Just for initialize img_testpad
     img2_testpad = img2_c.copy() # Just for initialize img2_testpad
+    # -------------- Detect Features based on Optical flow -------- >
     img2_features,st,err = cv2.calcOpticalFlowPyrLK(img1,img2,img1_features,None,**lk_params); 
-    img1_features_filtered = img1_features[err<50]
-    img2_features_filtered = img2_features[err<50]
+
+    img1_features_filtered = img1_features[st==1]
+    img2_features_filtered = img2_features[st==1]
+    featuredTrackedCount = len(img1_features_filtered)
+    print("Tracked features : " + str(featuredTrackedCount))
+    if(featuredTrackedCount < 50): # Triggering goodFeatureTrack
+        img1_features = cv2.goodFeaturesToTrack(img1, mask = None, **feature_params)
+        img2_features,st,err = cv2.calcOpticalFlowPyrLK(img1,img2,img1_features,None,**lk_params); 
+        img1_features_filtered = img1_features[err<50]
+        img2_features_filtered = img2_features[err<50]
+
+   # if(img1_features.size < )
     img1_keypoints = np.float32(img1_features_filtered)
     img2_keypoints = np.float32(img2_features_filtered)
     drawKeypoints(img1_testpad,img1_keypoints)
     drawKeypoints(img2_testpad,img2_keypoints)
     drawLinesforKeypoints(img1_keypoints,img2_keypoints,img2_testpad)
-    # cv2.imshow('new',tempimg)
+    # ----------------     Demonstrate data     ----------------
     plt.suptitle("Good Feature to Track", fontsize=16)
     plt.subplot(2,2,1)
     plt.imshow(cv2.cvtColor(img1_c,cv2.COLOR_BGR2RGB),cmap='gray')
@@ -112,7 +124,8 @@ for img in filenames:
     plt.imshow(img2_testpad,cmap='gray')
     img1_c = img2_c.copy()
     img1_features = img2_features.copy()
-    plt.waitforbuttonpress() 
+    plt.waitforbuttonpress()
+    plt.pause(0.001)
 
 
 
