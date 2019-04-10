@@ -128,9 +128,7 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 ## Related works
 
 ### Semi-dense Monocular VO algorithms *Schops et al.*
-<iframe width="560" height="315" src="(https://www.youtube.com/watch?v=X0hx2vxxTMg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-
+[![Watch the video](https://img.youtube.com/vi/X0hx2vxxTMg/maxresdefault.jpg)](https://youtu.be/X0hx2vxxTMg)
 
 ## Important notes from the article
 
