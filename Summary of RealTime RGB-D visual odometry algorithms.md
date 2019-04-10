@@ -52,28 +52,21 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 
 > Visual features methods are using local image features to register the current frame to a previous (key)frame. SIFT and SURF features are commonly used for this approach, however their computational costs are very high. BRISK, BRIEF and ORB methods are used instead of SIFT and Surf because of their low computation costs. These methods are perfoming well in highly textured scenes and they tend to fail in poor light conditions and also blurry images.
 
+````diff
++ Advantages:
 
-
-**<span style='color:blue'>Advantages:</span> **
-
-
-
-**<span style='color:red'> Drawback:</span> **
-
-
+- Disadvantages
+````
 
 * **`Direct`** | dense
 
 > The direct methods are dense method, as the registration uses all the pixels of the images. Under the assumption that the luminosity of the pixels is invariant to small viewpoint changes, they estimate the camera motion that maximizes a photo-consistency criterion between the two considered RGB-D frames. 
 
+````diff
++ Advantages:
 
-
-**<span style='color:blue'>Advantages:</span> **
-
-
-
-**<span style='color:red'> Drawback: </span> **
-
+- Disadvantages
+````
 
 
 **Depth-based** algorithms rely mostly on the information of the depth images. **Depth-based** algorithms can work well in poor light conditions as they rely on the 3D data, but on the other hand they might fail with scenes having low structure (e.g. only few planar surfaces)
@@ -83,12 +76,11 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 > 3D feature-based methods rely on the extraction of salient features on the 3D point clouds. The rigid body transform can be computed by matching the descriptors associated to the features extracted in two frames.
 
 
+````diff
++ Advantages:
 
-**<span style='color:blue'>Advantages:</span> **
-
-
-
-**<span style='color:red'> Drawback: </span> **
+- Disadvantages
+````
 
 
 
@@ -97,14 +89,11 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 > The Iterative Closest Point methods refer to a class of registration algorithms which try to iteratively minimize the distance between two point clouds without knowing the point correspondences.  The alignment error is computed with a given error metric such as point-to-point or point-to-plane distance, and the process is repeated until this error converges or the maximal number of iterations is reached.
 
 
+````diff
++ Advantages:
 
-**<span style='color:blue'>Advantages:</span> **
-
-
-
-**<span style='color:red'> Drawback: </span> **
-
-
+- Disadvantages
+````
 
 **Hybrid** algorithms try to combine the best of the two worlds in order to handle scenes having either low structure or little texture.
 
@@ -113,12 +102,11 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 > The joint-optimization strategy consists in designing an optimization problem which combines equations from depth-based and image-based approaches. 
 
 
+````diff
++ Advantages:
 
-**<span style='color:blue'>Advantages:</span> **
-
-
-
-**<span style='color:red'> Drawback: </span> **
+- Disadvantages
+````
 
 
 
@@ -127,16 +115,25 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 > They usually use one approach (usually a sparse method) to compute an initial guess of the registration, and use a second approach (usually a dense method) to refine the transformation or just compute it in case of failure of the first approach.
 
 
+````diff
++ Advantages:
 
-**<span style='color:blue'>Advantages:</span> **
+- Disadvantages
+````
 
 
 
-**<span style='color:red'> Drawback: </span> **
+
+
+## Related works
+
+### Semi-dense Monocular VO algorithms *Schops et al.*
+<iframe width="560" height="315" src="(https://www.youtube.com/watch?v=X0hx2vxxTMg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 
 
 ## Important notes from the article
+
 ### Small size and embedded depth sensors
 **PrimeSense** proposed first the now discontinued Capri 1.25 embedded camera sensor, which later the company bought by Apple for 365$ Million. 
 [**Google Tango Penaut**](https://www.youtube.com/watch?v=5qsgmKgMQnM) and **Yellow stone** are  another projectswere  aiming on using depth sensors on mobile devices and embedded devices.
