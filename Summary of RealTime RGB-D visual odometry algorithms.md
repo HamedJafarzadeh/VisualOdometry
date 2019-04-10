@@ -1,5 +1,5 @@
 ---
-typora-root-url: imgs
+
 ---
 
 # Summary of RealTime RGB-D visual odometry algorithms
@@ -12,7 +12,7 @@ typora-root-url: imgs
 ## Abstract
 Visual Odometry is an incremental process which estimates the 3D pose of the camera from visual data. This research area is relatively new and several methods and algorithm are already published. In  [the reference article][article] , they compared several RGB-D Visual Odometry techniques to the date (2017).They used a mobile device equipped with a RGB-D camera and they measure the accuracy of each algorithm as well as CPU load. In this summary, I will summarize the main points of the article to outline the main ideas and achievements, additionally I will add some other references that helped me to understand the points better.
 ## Introduction
-Depth sensors like kinect are being used in different application and industries in order to provide 3D data at relatively low cost. [Khoshelham et al][Khoshelham] evaluated experimentally the  accuracy of kinect sensors and proposed a `noise model` which explains why the depth error grows quadratically with the distance to the objects. The accuracy also depends on the tilt of the surface normal w.r.t the camera viewpoint and the properties of the object material. There were several attempts and products which you can find in [small size and embedded depth sensor section](#Small-size-and-embedded-depth-sensors) you can find some informations in this regard. ![Fig 1](/home/hamed/thesisproject/github/VisualOdometry/imgs/Selection_055.png)
+Depth sensors like kinect are being used in different application and industries in order to provide 3D data at relatively low cost. [Khoshelham et al][Khoshelham] evaluated experimentally the  accuracy of kinect sensors and proposed a `noise model` which explains why the depth error grows quadratically with the distance to the objects. The accuracy also depends on the tilt of the surface normal w.r.t the camera viewpoint and the properties of the object material. There were several attempts and products which you can find in [small size and embedded depth sensor section](#Small-size-and-embedded-depth-sensors) you can find some informations in this regard. ![Fig 1](./imgs/Selection_055.png)
 
 Reference paper authors proposed a benchmark and an evaluation of state-of-the-art Visual Odomtery (VO) algorithms suitable for running in real time on mobile devices with RGB-D sensor. Aim of this summary is on different algorithms and their performance, for more information on Visual Odometry and more detail information, reader can check [the reference article][article] .
 
@@ -40,7 +40,7 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 
 ## RGB-d Visual odometry methods
 
-​    ![1554888824498](/1554888824498.png)
+​    ![1554888824498](./imgs/1554888824498.png)
 
 
 
