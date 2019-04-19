@@ -131,6 +131,13 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 
 #### Fovis
 
+Fovis [20] is a fast visual odometry library developed for micro aerial vehicles (MAV). Feature based with frame-to-key-frame matching strategy.
+
+#### OCV RGB-D Module
+It is a OpenCV RGB-D module developed by Maria Dimashova and it offers three different type :
+
+##### OCV RGB-D
+
 
 
 #### FastICP
