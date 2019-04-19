@@ -232,11 +232,9 @@ There are two well-known metrics that can be used to estimate the accuracy of th
 
 ### Results
 
-**Lower RPE Better accuracy.**
-
 ![](./imgs/Selection_069.png)
 
-
+**Lower RPE Better accuracy.**
 
 ![](./imgs/Selection_065.png)
 
