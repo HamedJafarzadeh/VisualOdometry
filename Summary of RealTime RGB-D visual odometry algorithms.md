@@ -247,7 +247,7 @@ There are two well-known metrics that can be used to estimate the accuracy of th
 - noisier depth data, the accuracy of the ICP algorithm is comparable to the image-based algorithms
 - When the environment is neither flat nor textureless, image-based or hybrid-based methods are more robust than depth-based methods
 - the scenes recorded in the office also show the hybrid and image-based methods are more robust, but the accuracy difference with the depth-based methods is slighter
-- [**OCV RgbdICP *[Hybrid]](#OCV-ICP- *| Depth-based-|-ICP*)* and [Fovis *[Feature Based]*](#Fovis-|-*Image-Based-|-Feature-Based*) have the lowest RPE (Most accurate) on the scenes “fr1” and “fr2”**
+- [**OCV RgbdICP *[Hybrid]](#OCV-ICP--*|-Depth-based-|-ICP*)* and [Fovis *[Feature Based]*](#Fovis-|-*Image-Based-|-Feature-Based*) have the lowest RPE (Most accurate) on the scenes “fr1” and “fr2”**
 - [**DVO *[Depth-based]](#DVO-(Dense-Visual-Odometry))* and [OCV RGB-D *[Image-based direct]* ](#OCV-RGB-D-Module)generally come behind or between**
 
 ------
