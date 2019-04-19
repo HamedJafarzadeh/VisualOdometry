@@ -240,14 +240,14 @@ There are two well-known metrics that can be used to estimate the accuracy of th
 
 ![](./imgs/Selection_068.png)
 
-### results outline : 
+### Results outline 
 
 - the hybrid and image-based methods are the most accurate when the environment has texture and no structure such as the scenes “fr1 floor”, “fr3 nostructure texture near withloop” and “fr3 nostructure texture far”
 - Similarly, the environments with structure and low texture favour the hybrid and depth-based algorithms as shown by the scene “fr3 structure notexture near”
 - noisier depth data, the accuracy of the ICP algorithm is comparable to the image-based algorithms
 - When the environment is neither flat nor textureless, image-based or hybrid-based methods are more robust than depth-based methods
 - the scenes recorded in the office also show the hybrid and image-based methods are more robust, but the accuracy difference with the depth-based methods is slighter
-- OCV RgbdICP [Hybrid] and Fovis *[Feature Based]* have the lowest RPE (Most accurate) on the scenes “fr1” and “fr2”
+- OCV RGBD ICP [Hybrid] and Fovis *[Feature Based]* have the lowest RPE (Most accurate) on the scenes “fr1” and “fr2”
 - DVO [Depth-based] and OCV RGB-D [Image-based direct] generally come behind or between
 
 ------
