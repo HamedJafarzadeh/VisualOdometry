@@ -213,6 +213,8 @@ Reference :  [the reference article][https://link.springer.com/article/10.1007/s
 
 Dataset used : [RGB-D TUM](<https://vision.in.tum.de/data/datasets/rgbd-dataset>)
 
+
+
 ### Accuracy
 
 #### Evaluation
@@ -245,8 +247,8 @@ There are two well-known metrics that can be used to estimate the accuracy of th
 - noisier depth data, the accuracy of the ICP algorithm is comparable to the image-based algorithms
 - When the environment is neither flat nor textureless, image-based or hybrid-based methods are more robust than depth-based methods
 - the scenes recorded in the office also show the hybrid and image-based methods are more robust, but the accuracy difference with the depth-based methods is slighter
-- **OCV RgbdICP *[Hybrid]* and Fovis *[Feature Based]* have the lowest RPE (Most accurate) on the scenes “fr1” and “fr2”**
-- **DVO *[Depth-based]* and OCV RGB-D *[Image-based direct]* generally come behind or between**
+- [**OCV RgbdICP *[Hybrid]](# OCV RGBDICP  *| Image-Based | Direct)* and [Fovis *[Feature Based]*](# Fovis | *Image-Based | Feature-Based) have the lowest RPE (Most accurate) on the scenes “fr1” and “fr2”**
+- [**DVO *[Depth-based]](# DVO (Dense Visual Odometry))* and [OCV RGB-D *[Image-based direct]* ](# OCV RGB-D *| Image-Based | Direct*)generally come behind or between**
 
 ------
 
