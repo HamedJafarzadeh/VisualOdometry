@@ -125,18 +125,70 @@ Reference paper authors proposed a benchmark and an evaluation of state-of-the-a
 
 
 
-### Other algortihms
+### Algortihms
+---
 
 
-
-#### Fovis
-
+#### Fovis | *Image-Based | Feature-Based*
 Fovis [20] is a fast visual odometry library developed for micro aerial vehicles (MAV). Feature based with frame-to-key-frame matching strategy.
 
+![](./imgs/11554_2017_670_Fig3.gif)
+
+----
+
 #### OCV RGB-D Module
+
 It is a OpenCV RGB-D module developed by Maria Dimashova and it offers three different type :
 
-##### OCV RGB-D
+##### 	OCV RGB-D *| Image-Based | Direct*
+
+Image-based approach inspired by Steinbrucker et al works  [55] with a frame-to-frame matching strategy. Two hypotheses are made : 
+
+First, the light intensity of a 3D point is considered constant between frames, then the angular and translational speed are supposed to be constant between two frames. The aglorithm finds the transformation relating two frames by minimizing the difference in intesity between warped current RGB-D frame to the previous one.
+
+![](./imgs/11554_2017_670_Fig4_HTML.gif)
+
+
+
+##### 	OCV ICP  *| Depth-based | ICP*
+
+It is inspired by the point cloud registration algorithm of KinectFusion [[32](https://link.springer.com/article/10.1007/s11554-017-0670-y#CR32)]. KinectFusion ICP variant is based on a projection based heuristic association function with a point-to-plane error metric. Assuming a small rotation between the two frames, the minimization of the point-to-plane error is reduced to a linear least square problem.
+
+![](./imgs/11554_2017_670_Fig5_HTML.gif)
+
+##### 	OCV RGBDICP  *| Image-Based | Direct
+
+It is a combination of OCV RGBD and ICP, introduced to solve the linear least square problems of  OCV ICP and RGBD methods.
+
+![](./imgs/11554_2017_670_Fig6_HTML.gif)
+
+----
+
+#### DVO (Dense Visual Odometry)
+
+It is a direct image-based method with a frame-to-frame matching strategy. 
+
+*(I didn't understand it completely)*
+
+![](./imgs/11554_2017_670_Fig7_HTML.gif)
+
+
+
+----
+
+#### MRSMAP VO
+
+Stückler et al. [[56](https://link.springer.com/article/10.1007/s11554-017-0670-y#CR56)] proposed a 3D feature-based approach with a frame-to-frame matching strategy in which each frame is viewed as an octree of surfels. The originality of the approach is that multiple levels of resolution can be used simultaneously since each parent node of the octree encodes the information of their children node
+
+![](./imgs/11554_2017_670_Fig8_HTML.gif)
+
+-----
+
+####  Occipital STTracker
+
+Structure is a depth sensor manufactured by Occipital using Primesense’s technology, and it uses structured light to estimate the depth. The sensor does not support any RGB camera, and it has to take advantage of the mobile device rear camera to retrieve the RGB frames. Occipital provides an iOS SDK with a VO algorithm in two flavours: depth-based [[35](https://link.springer.com/article/10.1007/s11554-017-0670-y#CR35)] and hybrid [[36](https://link.springer.com/article/10.1007/s11554-017-0670-y#CR36)].
+
+----
 
 
 
@@ -144,27 +196,75 @@ It is a OpenCV RGB-D module developed by Maria Dimashova and it offers three dif
 
 
 
-#### Rangeflow
+### Rangeflow
 
 
 
-#### 3D-NDT
+### 3D-NDT
 
 
 
-#### CCNY
+### CCNY
 
  
 
-#### Demo
+### Demo
+
+----
+
+## Algorithm comparisions
+Reference :  [the reference article][article]
+
+Dataset used : [RGB-D TUM](<https://vision.in.tum.de/data/datasets/rgbd-dataset>)
+
+### Accuracy
+
+#### Evaluation
+
+There are two well-known metrics that can be used to estimate the accuracy of the estimated camera poses over time, the absolute translational error (ATE) and the translational relative pose error (RPE).
+
+- ATE computes the Euclidean distance between the estimated camera position and its ground truth
+- The ATE is then defined as the mean squared error (RMSE) of these distances all along the trajectory.
+- The RPE is instead used to measure the local accuracy of the estimated trajectory over a fixed time interval Δ
+- TUM has various environment dataset : The “fr1” sequences provide various scenes recorded in an office environment. 
+- The “fr2” sequences were recorded in a large industrial hall. Compared to the “fr1” sequences they are generally longer and have a slower camera motion. 
+- the “fr3” sequences feature a scene with a desk and various evaluation series to evaluate the performances of algorithms on scenes with structure and/or texture.
+
+### Results
+
+**Lower RPE Better accuracy.**
+
+![](./imgs/Selection_069.png)
 
 
 
+![](./imgs/Selection_065.png)
+
+![](./imgs/Selection_066.png)
+
+![](./imgs/Selection_068.png)
+
+### results outline : 
+
+- the hybrid and image-based methods are the most accurate when the environment has texture and no structure such as the scenes “fr1 floor”, “fr3 nostructure texture near withloop” and “fr3 nostructure texture far”
+- Similarly, the environments with structure and low texture favour the hybrid and depth-based algorithms as shown by the scene “fr3 structure notexture near”
+- noisier depth data, the accuracy of the ICP algorithm is comparable to the image-based algorithms
+- When the environment is neither flat nor textureless, image-based or hybrid-based methods are more robust than depth-based methods
+- the scenes recorded in the office also show the hybrid and image-based methods are more robust, but the accuracy difference with the depth-based methods is slighter
+- **OCV RgbdICP *[Hybrid]* and Fovis *[Feature Based]* have the lowest RPE (Most accurate) on the scenes “fr1” and “fr2”**
+- **DVO *[Depth-based]* and OCV RGB-D *[Image-based direct]* generally come behind or between**
+
+------
 
 
-## Related works
 
-### Algorithm comparisions
+A first simple observation of the different graphs is that the accuracy results significantly vary from a scene to another. As stated by Fang [[13](https://link.springer.com/article/10.1007/s11554-017-0670-y#CR13)], there is no algorithm which outperforms the others in all environments. The results have to be analysed w.r.t. the scene characteristics. Therefore, the choice of VO algorithm depends on the target environment.
+
+Apart from the challenging scenes, we described earlier and correspond to higher RPE values, the slower “fr2” (dataset in a certain environment) scenes obtain better results than the “fr1” scenes. 
+
+
+
+### Other comparisions
 
 [Morell-Gimenez et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4063070/). performed a comparision of registation methods on scenes mapping and object reconstruction scenarios. for the scenes mapping scenario which is our topic of interest, they evaluated five different algorithms : DVO, KinFu (Kinect Fusion implementation), an ICP approach, an image-based visual feature approach using a combiation of FAST keypoints and BRIEF descriptors, and an hybrid two-stage approach combining the two last ones where the refinement step is provided by the ICP algorithm. The approaches implemented by Morell-Gimnenez et al. using Point Cloud Library. **The results show that DVO and KinFu are the most accurate algorithms on the "fr1" scenes of the TUM datasets**. However there is no information about the computational time and the memory consumption as the main objective was to assess the quality and the accuracy of each method.
 
